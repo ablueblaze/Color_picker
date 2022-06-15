@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" type="module" defer></script>
+    <title>Color Picker</title>
+</head>
+<body>
+    <main>
+        <header>
+            <div class="scheme-selector">
+                <input type="color" name="root-color" id="root-color">
+                <button id="mode-selector"></button>
+                <ul>
+                    <li class="mode-circle quad" id="quad">
+                        quad
+                    </li>
+                    <li class="mode-circle triad" id="triad">
+                        triad
+                    </li>
+                    <li class="mode-circle analogic" id="analogic">
+                        analogic
+                    </li>
+                    <li class="mode-circle complement" id="complement">
+                        complement
+                    </li>
+                    <li class="mode-circle monochrome" id="monochrome">
+                        monochrome
+                    </li>
+                    <li class="mode-circle monochrome-dark" id="monochrome-dark">
+                        monochrome-dark
+                    </li>
+                    <li class="mode-circle monochrome-light" id="monochrome-light">
+                        monochrome-light
+                    </li>
+                </ul>
+            </div>
+        </header>
+        <section id="color-boxes">
+        </section> 
+    </main>
+</body>
+</html>
