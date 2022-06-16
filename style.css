@@ -1,68 +1,186 @@
+:root {
+    --prime-black: #1a1a1a;
+    --frame-black: #1F2937;
+    --btn-grey: #3D4B60;
+    --prime-white: #D5D4D8;
+
+}
+
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
     height: 100%;
-    background-color: teal;
+    background-color: var(--prime-black);
     text-align: center;
     padding-top: 3vh;
+    color: var(--prime-white);
+    font-size: 1.5rem;
+    text-shadow: 0 0 2px black;
 }
 
-main {
-    position: relative;
-    max-width: 700px;
-    min-width: 400px;
+.container {
+    max-width: 550px;
     margin: 0 auto;
+    background-color: var(--frame-black);
 }
 
-header {
-    position: absolute;
-    display: flex;
-    background-color: #494949;
+button {
+    padding: .5em;
+    font-size: 1.2rem;
+    text-shadow: 0 0 2px black;
+    border-radius: 5px;
+}
+
+/* 
+################
+Nav Bar
+################ 
+*/
+
+header{
     width: 100%;
-    min-height: 3em;
-    
+    background-color: var(--frame-black);
+    height: 4em;
+}
+
+nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+
+input {
+    margin-left: 1rem;
+    height: 3em;
+    width: 5em;
+}
+
+.get-color-btn {
+    margin-right: 1rem;
+    background-color: var(--btn-grey);
+    border: 1px solid var(--prime-white);
+    color: var(--prime-white);
 }
 
 .scheme-selector {
+    position: relative;
+    width: 40%;
+}
+
+.scheme-btn {
     width: 100%;
-    position: absolute;
+    background-color: var(--frame-black);
+    color: var(--prime-white);
+    border: 1px solid var(--prime-white);
+    text-transform: capitalize;
+}
+
+.scheme {
+    position: relative;
+    padding: .2em 1em ; 
+    list-style: none;
+    text-align: left;
+    text-transform: capitalize;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
 }
 
 ul {
-    list-style-type: none;
-    margin: 0 auto;
-}
-
-li {
-    min-width: 3em;
-    border: 1px solid black;
-}
-
-
-div {
-    border: 1px solid #ff0000;
-}
-
-section {
-    display: flex;
-    height: 80vh;
-}
-
-.column {
+    position: absolute;
+    background-color: var(--frame-black);
     width: 100%;
+    pointer-events: none;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.4s ease-in-out;
 }
 
-.color-box {
-    background-color: blueviolet;
+ul.active {
+    transform: translateY(0px);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.selected {
+    position: absolute;
+    right: 0;
+}
+
+/* 
+################
+tick mark source:
+https://usefulangle.com/post/236/css-checkmark-tick
+################ 
+*/
+
+.tick-mark {
+    position: relative;
+    display: none;
+    width: 30px;
+    height: 30px;
+}
+
+.tick-mark::before {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    height: 50%;
+    width: 3px;
+    background-color: #336699;
+    content: "";
+    transform: translateX(10px) rotate(-45deg);
+    transform-origin: left bottom;
+}
+
+.tick-mark::after {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 100%;
+    background-color: #336699;
+    content: "";
+    transform: translateX(10px) rotate(-45deg);
+    transform-origin: left bottom;
+}
+
+.scheme.active > .tick-mark {
+    display: inline-block;
+}
+
+
+/* 
+################
+Color Field
+################ 
+*/
+
+.color-field{
+    display: flex;
+    max-height: 700px;
+    
+}
+
+.column{
+    width: 100%;
+    min-height: 50vh;
+}
+
+.color-box{
     width: 100%;
     height: 100%;
 }
 
-.color-name {
-    border: 1px solid orange;
-    width: 100%;
-    /* height: 3em; */
-    
+.color-name{
+    padding: .5em 0;
+    background-color: var(--frame-black);
+
 }

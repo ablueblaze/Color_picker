@@ -9,38 +9,29 @@
     <title>Color Picker</title>
 </head>
 <body>
-    <main>
+    <div class="container">
         <header>
-            <div class="scheme-selector">
-                <input type="color" name="root-color" id="root-color">
-                <button id="mode-selector"></button>
-                <ul>
-                    <li class="mode-circle quad" id="quad">
-                        quad
-                    </li>
-                    <li class="mode-circle triad" id="triad">
-                        triad
-                    </li>
-                    <li class="mode-circle analogic" id="analogic">
-                        analogic
-                    </li>
-                    <li class="mode-circle complement" id="complement">
-                        complement
-                    </li>
-                    <li class="mode-circle monochrome" id="monochrome">
-                        monochrome
-                    </li>
-                    <li class="mode-circle monochrome-dark" id="monochrome-dark">
-                        monochrome-dark
-                    </li>
-                    <li class="mode-circle monochrome-light" id="monochrome-light">
-                        monochrome-light
-                    </li>
-                </ul>
-            </div>
+            <nav>
+                <input type="color" name="root-color" id="color-selector" value="#0fbbd2">
+                <div class="scheme-selector">
+                    <button class="scheme-btn" id="scheme-btn">Quad</button>
+                    <ul id="scheme-list">
+                        <li class="scheme extra active" data-scheme-name="quad">quad 
+                            <span class="tick-mark active"></span></li>
+                        <li class="scheme extra" data-scheme-name="triad">triad
+                            <span class="tick-mark"></span></li>
+                        <li class="scheme extra" data-scheme-name="analogic">analogic
+                            <span class="tick-mark"></span></li>
+                        <li class="scheme extra" data-scheme-name="complement">complement
+                            <span class="tick-mark"></span></li>
+                        <li class="scheme extra" data-scheme-name="monochrome">monochrome
+                            <span class="tick-mark"></span></li>
+                    </ul>
+                </div>
+                <button class="get-color-btn" id="get-colors-btn">Get Color Scheme</button>
+            </nav>
         </header>
-        <section id="color-boxes">
-        </section> 
-    </main>
+        <main class="color-field" id="color-field"></main>
+    </div>
 </body>
 </html>

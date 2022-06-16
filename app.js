@@ -1,62 +1,112 @@
-import Mode from './scripts/mode-class.js';
-/*
-Different color modes available: 
-    monochrome monochrome-dark monochrome-light 
-    analogic complement triad quad
+/* 
+Color picker
+Features:
+    Select the base color
+    Select the type of color scheme to view
+    Display colors
+    Display hex values
+
+Different modes available:
+    quad
+    triad 
+    analogic 
+    monochrome 
+    complement 
+    monochrome-dark 
+    monochrome-light 
+    analogic-complement 
 */
 
-const colorBoxes = document.getElementById('color-boxes');
-const rootColor = document.getElementById('root-color');
-const modeSelector = document.getElementById('mode-selector')
-let currentMode = ''
+import Scheme from './scripts/scheme-class.js';
 
-rootColor.addEventListener('change', () => {
-    const hexValue = JSON.stringify(rootColor.value);
-    getAllColors(hexValue.slice(2, 8))
-});
+let activeColor = '0fbbd2';
 
-let quad = new Mode('quad', 4)
-let triad = new Mode('triad', 3);
-let analogic = new Mode('analogic');
-let complement = new Mode('complement');
-let monochrome = new Mode('monochrome');
-let monochromeDark = new Mode('monochrome-dark');
-let monochromeLight = new Mode('monochrome-light');
-
-quad.active = true;
-
-const allColors = [
-    quad,
-    triad,
-    analogic,
-    complement,
-    monochrome,
-    monochromeDark,
-    monochromeLight,
+let colorSchemes = [
+    new Scheme('quad', 4, true),
+    new Scheme('triad', 3),
+    new Scheme('analogic', 5),
+    new Scheme('complement', 2),
+    new Scheme('monochrome', 5 ),
+    // new Scheme('monochrome-dark', 5),
+    // new Scheme('monochrome-light', 5),
+    // new Scheme('analogic-complement', 5)
 ];
 
-function getColors(colorMode, startHex) {
-    const colorModeName = colorMode.name;
-    const count = colorMode.colorCount;
+const colorField = document.getElementById('color-field');
+
+const updateColorField = () => {
+    colorSchemes.map((scheme) => {
+        if (scheme.active) {
+            getColors(scheme, activeColor)
+        }
+    })
+}
+
+const getColors = (colorScheme, startingHex) => {
+    const count = colorScheme.colorCount;
+    const modeName = colorScheme.name;
     fetch(
-        `https://www.thecolorapi.com/scheme?hex=${startHex}&mode=${colorModeName}&count=${count}&format=json`
+        `https://www.thecolorapi.com/scheme?hex=${startingHex}&mode=${modeName}&count=${count}&format=json`
     )
         .then((res) => res.json())
         .then((data) => {
-            console.log(data)
-            console.log(data.colors);
-            colorMode.colors = data.colors;
-            if (colorMode.active) {
-                colorMode.getPaletteHtml(colorBoxes);
-                modeSelector.textContent = colorMode.name;
-            }
+            colorScheme.colors = data.colors;
+            colorScheme.getPaletteHtml(colorField)
         });
+};
+
+// initial instance
+updateColorField()
+
+/*
+############
+Event Listeners
+############
+*/
+
+const schemeBtn = document.getElementById('scheme-btn')
+const schemeList = document.getElementById('scheme-list')
+const schemeNames = document.querySelectorAll('[data-scheme-name]')
+
+// set active on the list item on page, and inside the scheme object
+const setActiveScheme = (activeScheme) => {
+    colorSchemes.map(scheme => {
+        scheme.active = false
+        if (scheme.name === activeScheme) {
+            scheme.active = true
+            // scheme.getPaletteHtml(colorField)
+        }
+    })
+    schemeNames.forEach(scheme => {
+        scheme.classList.remove('active')
+        if (scheme.dataset.schemeName === activeScheme) {
+            scheme.classList.add('active')
+        }
+    })
 }
 
-function getAllColors(startHex) {
-    for (let i of allColors) {
-        getColors(i, startHex)
-    }
-}
+// Get a color from the user, update the active color
+document.getElementById('color-selector').addEventListener('change', (e) => {
+    activeColor = e.target.value.slice(1, 8);
+})
 
-getAllColors('0fbbd2')
+// Activate the dropdown menu
+schemeBtn.addEventListener('click', () => {
+    schemeList.classList.add('active')
+})
+
+
+schemeNames.forEach(scheme => {
+    scheme.addEventListener('click', (e) => {
+        const schemeName = e.target.dataset.schemeName;
+        schemeBtn.textContent = schemeName;
+        setActiveScheme(schemeName)
+        scheme.classList.add('active')
+        schemeList.classList.remove('active')
+    })
+})
+
+// Update the colors on screen
+document.getElementById('get-colors-btn').addEventListener('click', () => {
+    updateColorField()
+})
